@@ -8,7 +8,7 @@ Function GetComputerName:string;
 function GetSelfVersion:string;
 function GetKnownFolderPath(const ID: TKnownFolderID): WideString;
 Function keypressed:integer;
-Procedure NowTimeIntoVars(var mh,mm,ms,mml:integer);
+Procedure NowTimeIntoVars(var mh,mm,ms,mml:word);
 Procedure ProgOnTop(form1:Tform);
 procedure MXY(x,y: word);
 procedure ClickXY(x,y: word);
@@ -17,7 +17,7 @@ Function WhereCursor:TPoint;
 Function GetSystemFolder(st:string):widestring;
 
 implementation
-Procedure NowTimeIntoVars(var mh,mm,ms,mml:integer);
+Procedure NowTimeIntoVars(var mh,mm,ms,mml:word);
 begin
   Decodetime(now,mh,mm,ms,mml);
 end;
@@ -142,12 +142,14 @@ const FOLDERID_Userdocuments: TKnownFolderID = '{FDD39AD0-238F-46AF-ADB4-6C85480
       FOLDERID_Desktop: TKnownFolderID = '{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}';
       FOLDERID_Downloads: TKnownFolderID = '{374DE290-123F-4565-9164-39C4925E467B}';
       FOLDERID_History: TKnownFolderID = '{D9DC8A3B-B784-432E-A781-5A1130A75963}';
+Type Foldername=(Документы,Рабочий_стол,Загрузки);
 var id:TKnownFolderID;
+    fn:foldername;
 begin
-case st of
-'Документы':id=FOLDERID_Userdocuments;
-'Рабочий стол':id=FOLDERID_Desktop;
-'Загрузки':id=FOLDERID_Downloads;
+case fn of
+Документы:id:=FOLDERID_Userdocuments;
+Рабочий_стол:id:=FOLDERID_Desktop;
+Загрузки:id:=FOLDERID_Downloads;
 end;
   result:=GetKnownFolderPath(id);
 end;
