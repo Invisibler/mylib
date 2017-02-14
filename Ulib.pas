@@ -14,8 +14,7 @@ procedure MXY(x,y: word);
 procedure ClickXY(x,y: word);
 Procedure CloseProgram;
 Function WhereCursor:TPoint;
-const
- FOLDERID_Userdocuments: TKnownFolderID = '{FDD39AD0-238F-46AF-ADB4-6C85480369C7}';
+Function GetSystemFolder(st:string):widestring;
 
 implementation
 Procedure NowTimeIntoVars(var mh,mm,ms,mml:integer);
@@ -133,4 +132,24 @@ begin
      FreeLibrary(hShell);
    end;
 end;
+
+Function GetSystemFolder(st:string):widestring;
+const FOLDERID_Userdocuments: TKnownFolderID = '{FDD39AD0-238F-46AF-ADB4-6C85480369C7}';
+      FOLDERID_AccountPictures: TKnownFolderID = '{008ca0b1-55b4-4c56-b8a8-4de4b299d3be}';
+      FOLDERID_AddNewPrograms: TKnownFolderID = '{de61d971-5ebc-4f02-a3a9-6c82895e5c04}';
+      FOLDERID_AdminTools: TKnownFolderID = '{724EF170-A42D-4FEF-9F26-B60E846FBA4F}';
+      FOLDERID_ApplicationShortcuts: TKnownFolderID = '{A3918781-E5F2-4890-B3D9-A7E54332328C}';
+      FOLDERID_Desktop: TKnownFolderID = '{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}';
+      FOLDERID_Downloads: TKnownFolderID = '{374DE290-123F-4565-9164-39C4925E467B}';
+      FOLDERID_History: TKnownFolderID = '{D9DC8A3B-B784-432E-A781-5A1130A75963}';
+var id:TKnownFolderID;
+begin
+case st of
+'Документы':id=FOLDERID_Userdocuments;
+'Рабочий стол':id=FOLDERID_Desktop;
+'Загрузки':id=FOLDERID_Downloads;
+end;
+  result:=GetKnownFolderPath(id);
+end;
+
 end.
